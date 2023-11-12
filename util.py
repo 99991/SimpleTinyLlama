@@ -1,10 +1,9 @@
-import urllib.request
 import os
+import urllib.request
 
 def download(url, filename, chunk_size=10**6):
     # Skip download if file already exists
     if os.path.isfile(filename):
-        print(f"{filename} already exists, skipping download")
         return
 
     # Create directory if it doesn't exist
@@ -36,15 +35,3 @@ def download(url, filename, chunk_size=10**6):
 
         assert size == total_size, f"Downloaded of file {filename} incomplete, only {size} bytes of {total_size} bytes downloaded"
 
-def main():
-    model_url = "https://huggingface.co/PY007/TinyLlama-1.1B-Chat-v0.3/resolve/main/pytorch_model.bin?download=true"
-    model_filename = "data/TinyLlama-1.1B-Chat-v0.3/pytorch_model.bin"
-    tokenizer_url = "https://huggingface.co/PY007/TinyLlama-1.1B-Chat-v0.3/resolve/main/tokenizer.model?download=true"
-    tokenizer_filename = "data/TinyLlama-1.1B-Chat-v0.3/tokenizer.model"
-    
-    # Download tokenizer and model
-    download(tokenizer_url, tokenizer_filename)
-    download(model_url, model_filename)
-
-if __name__ == "__main__":
-    main()
