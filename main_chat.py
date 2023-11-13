@@ -66,7 +66,7 @@ def main():
 
                     # Clear screen, print prompt and response
                     clear_screen = "\x1b[2J\x1b[H"
-                    print(clear_screen + "Ask a question:\n" + prompt)
+                    print(clear_screen + "Ask a question:\n" + prompt + "\n")
                     print(response)
         except KeyboardInterrupt:
             print("Response interrupted")
