@@ -1,6 +1,7 @@
 # SimpleTinyLlama
 
-The goal of this project is to serve as a simpler implementation of [TinyLlama](https://github.com/jzhang38/TinyLlama). The only required dependency is PyTorch.
+[TinyLlama](https://github.com/jzhang38/TinyLlama) is a relatively small large language model with impressive capabilities for its size.
+The goal of this project is to serve as a simpler implementation of TinyLlama. The only required dependency is PyTorch.
 
 <div align="center">
   <img src="https://github.com/99991/SimpleTinyLlama/assets/18725165/834efd71-e933-407f-92bb-f19979c34188" width="300"/>
@@ -13,6 +14,9 @@ The goal of this project is to serve as a simpler implementation of [TinyLlama](
 3. Run `main_chat.py` to chat with the llama.
 4. Press CTRL + C to interrupt the response.
 5. Press CTRL + C again to exit the program.
+
+# Example
+![Example of asking about the airspeed velocity of an unladen swallow](https://github.com/99991/SimpleTinyLlama/assets/18725165/ea0ecd8e-458c-4241-944f-e199a5836635)
 
 # Notes
 
