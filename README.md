@@ -20,6 +20,7 @@ The goal of this project is to serve as a simpler implementation of TinyLlama. T
 
 # Notes
 
+- CUDA will be used if available, but requires approximately 6 GB of VRAM. If you do not have that much VRAM, you can set the computation device manually in [`main_chat.py`](https://github.com/99991/SimpleTinyLlama/blob/main/main_chat.py#L18).
 - Only inference is supported. Training is not supported.
 - Chat history is currently not supported.
 - Key/value caching is currently not supported.
