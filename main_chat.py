@@ -31,11 +31,11 @@ def main():
 
         try:
             # Convert to chat prompt format
-            prompt = f"<|im_start|>user\n{prompt}<|im_end|>\n<|im_start|>assistant\n"
+            chat_prompt = f"<|im_start|>user\n{prompt}<|im_end|>\n<|im_start|>assistant\n"
 
             # Convert prompt to a list of token ids
             tokenizer = ChatTokenizer(tokenizer_filename)
-            token_ids = tokenizer.encode(prompt)
+            token_ids = tokenizer.encode(chat_prompt)
 
             # Generate tokens one by one
             while len(token_ids) < 2048:
@@ -63,7 +63,10 @@ def main():
                 # Print response after <|im_start|>assistant\n
                 if response_start in decoded:
                     response = decoded.split(response_start)[1]
-                
+
+                    # Clear screen, print prompt and response
+                    clear_screen = "\x1b[2J\x1b[H"
+                    print(clear_screen + "Ask a question:\n" + prompt)
                     print(response)
         except KeyboardInterrupt:
             print("Response interrupted")
