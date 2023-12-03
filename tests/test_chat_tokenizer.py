@@ -30,5 +30,13 @@ def test_tokenizer():
     for text in test_texts:
         assert my_tokenizer.encode(text) == auto_tokenizer.encode(text)
 
+    for text in test_texts:
+        my_out = my_tokenizer.decode(my_tokenizer.encode(text))
+        auto_out = auto_tokenizer.decode(auto_tokenizer.encode(text))
+        auto_out = auto_out[4:]  # skipping "<s> " at the beginning of the decoded string
+        if not my_out == auto_out:
+            # print(f"{my_out} vs {auto_out}")
+            assert False
+
 if __name__ == "__main__":
     test_tokenizer()

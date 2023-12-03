@@ -226,9 +226,27 @@ class ChatTokenizer(Tokenizer):
             tmp = []
             while i < n and token_ids[i] not in self.special_tokens:
                 token = self.tokens[token_ids[i]]
-                token = replace_hex(token)
+                j = 1
+                # if hex: accumulate bytes until decoding is possible
+                if re.match("^<0x[0-9A-F][0-9A-F]>$", token):
+                    not_converted = True
+                    while not_converted:
+                        # get byte tokens
+                        byte_tokens = [self.tokens[token_ids[k]] for k in range(i, i + j)]
+                        # merge byte tokens into single string, containing only hex characters
+                        byte_tokens = "".join([b[3:5] for b in byte_tokens])
+                        # convert to bytes
+                        byte_value = bytes.fromhex(byte_tokens)
+                        try:
+                            # try decoding to unicode sign
+                            token = byte_value.decode("utf-8")
+                            not_converted = False
+                        except UnicodeDecodeError:
+                            # decoding failed, need to accumulate more bytes to decode
+                            j += 1
+                            continue
                 tmp.append(token)
-                i += 1
+                i += j
             
             # Remove leading underscore
             if tmp:
