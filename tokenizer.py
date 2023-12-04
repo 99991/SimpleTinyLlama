@@ -14,6 +14,7 @@ class TokenNode:
 class Tokenizer:
     def __init__(self, filename: str) -> None:
         self.tokens: List[str] = []
+        self.byte_tokens: List[bytes] = []
         self.scores: List[float] = []
         self.token_ids: Dict[str, int] = {}
         self.token_scores: Dict[str, float] = {}
@@ -25,7 +26,8 @@ class Tokenizer:
                 end = f.tell() + size
                 assert f.read(1) == b"\n"
                 token_size = f.read(1)[0]
-                token = f.read(token_size).decode("utf-8")
+                byte_token = f.read(token_size)
+                token = byte_token.decode("utf-8")
                 assert f.read(1) == b"\x15"
                 score = struct.unpack("<f", f.read(4))[0]
                 if f.tell() != end:
@@ -34,8 +36,13 @@ class Tokenizer:
                     assert token_type in b"\x02\x03\x06"
                 assert f.tell() == end
 
+                if re.match("^<0x[0-9A-F][0-9A-F]>$", token):
+                    byte = int(token[1:-1], 16)
+                    byte_token = bytes([byte])
+
                 token_id = len(self.tokens)
                 self.tokens.append(token)
+                self.byte_tokens.append(byte_token)
                 self.scores.append(score)
                 self.token_ids[token] = token_id
                 self.token_scores[token] = score
@@ -219,25 +226,24 @@ class ChatTokenizer(Tokenizer):
         while i < n:
             # Decode special tokens
             while i < n and token_ids[i] in self.special_tokens:
-                tokens.append(self.special_tokens[token_ids[i]])
+                tokens.append(self.special_tokens[token_ids[i]].encode("utf-8"))
                 i += 1
-            
+
             # Decode regular text
             tmp = []
             while i < n and token_ids[i] not in self.special_tokens:
-                token = self.tokens[token_ids[i]]
-                token = replace_hex(token)
-                tmp.append(token)
+                tmp.append(self.byte_tokens[token_ids[i]])
                 i += 1
-            
+
             # Remove leading underscore
             if tmp:
-                assert tmp[0].startswith("▁")
-                tmp[0] = tmp[0][1:]
-            
+                magic_underscore = "▁".encode("utf-8")
+                assert tmp[0].startswith(magic_underscore)
+                tmp[0] = tmp[0][len(magic_underscore):]
+
             tokens.extend(tmp)
 
-        text = "".join(tokens)
+        text = b"".join(tokens).decode("utf-8")
 
         # Replace underscores with spaces
         text = text.replace("▁", " ")
