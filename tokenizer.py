@@ -174,34 +174,28 @@ class ChatTokenizer(Tokenizer):
     def __init__(self, filename: str) -> None:
         super().__init__(filename)
 
-        # Beginning of sentence token
-        self.bos = "<s>"
-        self.bos_id = self.token_ids[self.bos]
-
-        # Special token ids for chat prompts
-        self.pad_token_id = 32000
-        self.start_token_id = 32001
-        self.end_token_id = 32002
-
+        # Special token ids (will be handled separately)
         self.special_token_ids = {
-            "<|im_start|>": self.start_token_id,
-            "<|im_end|>": self.end_token_id,
+            "<unk>": 0,
+            "<s>": 1,
+            "</s>": 2,
         }
 
-        self.special_tokens = {v:k for k, v in self.special_token_ids.items()}
+        self.end_token_id = self.token_ids["</s>"]
 
+        self.special_tokens = {v:k for k, v in self.special_token_ids.items()}
 
     def encode(self, text: str) -> List[int]:
         # Encode a string into a list of token ids
 
-        # Handle special strings (<|im_start|>, <|im_end|>, etc.) separately
+        # Handle special strings (<s>, </s>, etc.) separately
         pattern = "|".join(re.escape(token) for token in self.special_token_ids)
         parts = re.split("(" + pattern + ")", text)
 
         parts = [part for part in parts if part]
 
         # Prepend beginning of sentence token
-        token_ids = [self.bos_id]
+        token_ids = []
 
         # Encode each part as a list of token ids
         for part in parts:
@@ -217,9 +211,6 @@ class ChatTokenizer(Tokenizer):
 
     def decode(self, token_ids: List[int]) -> str:
         # Decode a list of token ids into a string
-        assert token_ids[:1] == [self.bos_id]
-        token_ids = token_ids[1:]
-
         tokens = []
         i = 0
         n = len(token_ids)
