@@ -16,11 +16,11 @@ The goal of this project is to serve as a simpler implementation of TinyLlama. T
 5. Press CTRL + C again to exit the program.
 
 # Example
-![Example of asking about the airspeed velocity of an unladen swallow](https://github.com/99991/SimpleTinyLlama/assets/18725165/ea0ecd8e-458c-4241-944f-e199a5836635)
+![Example of asking how to steal a duck.](https://github.com/99991/SimpleTinyLlama/assets/18725165/a1e3ec73-294e-433a-88e1-8645f46271fd)
 
 # Notes
 
-- CUDA will be used if available, but requires approximately 6 GB of VRAM. If you do not have that much VRAM, you can set the computation device manually in [`main.py`](https://github.com/99991/SimpleTinyLlama/blob/main/main.py#L18).
+- CUDA will be used if available, but requires approximately 3 GB of VRAM. If you do not have that much VRAM, you can set the computation device manually in [`main.py`](https://github.com/99991/SimpleTinyLlama/blob/main/main.py#L18).
 - Only inference is supported. Training is not supported.
 - Chat history is currently not supported.
 - This project includes a pure Python implementation of a subset of the Sentencepiece tokenizer. It is not as fast as the C++ implementation, but it is sufficient for this project.
