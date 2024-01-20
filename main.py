@@ -16,7 +16,7 @@ def main():
 
     model_filename = "data/TinyLlama-1.1B-Chat-v1.0/model.safetensors"
     model_url = "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0/resolve/main/model.safetensors?download=true"
-    tokenizer_filename = "data/TinyLlama-1.1B-Chat-1.0/tokenizer.model"
+    tokenizer_filename = "data/TinyLlama-1.1B-Chat-v1.0/tokenizer.model"
     tokenizer_url = "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0/resolve/main/tokenizer.model?download=true"
 
     # Download tokenizer and model
