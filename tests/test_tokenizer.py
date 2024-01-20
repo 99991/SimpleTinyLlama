@@ -6,8 +6,8 @@ from sentencepiece import SentencePieceProcessor
 from tests.test_data import test_texts
 
 def test_tokenizer():
-    url = "https://huggingface.co/PY007/TinyLlama-1.1B-Chat-v0.3/resolve/main/tokenizer.model?download=true"
-    filename = "data/TinyLlama-1.1B-Chat-v0.3/tokenizer.model"
+    filename = "data/TinyLlama-1.1B-Chat-v1.0/tokenizer.model"
+    url = "https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0/resolve/main/tokenizer.model?download=true"
     download(url, filename)
 
     sp_tokenizer = SentencePieceProcessor(filename)

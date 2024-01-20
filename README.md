@@ -24,7 +24,3 @@ The goal of this project is to serve as a simpler implementation of TinyLlama. T
 - Only inference is supported. Training is not supported.
 - Chat history is currently not supported.
 - This project includes a pure Python implementation of a subset of the Sentencepiece tokenizer. It is not as fast as the C++ implementation, but it is sufficient for this project.
-
-# TODO
-
-- Update tests to work with version 1.0 of TinyLlama (chat format changed).
