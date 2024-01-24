@@ -212,7 +212,7 @@ def attention(x, position_ids, i, cache, state_dict):
     # To predict future tokens, only previous tokens may be used.
     # This is ensured by weighting future tokens very negatively,
     # so they are not chosen by the softmax.
-    attn_weights = attn_weights + attention_mask[position_ids, :attn_weights.shape[3]].unsqueeze(0)
+    attn_weights = attn_weights + attention_mask[position_ids, :attn_weights.shape[3]].unsqueeze(1)
 
     attn_weights = F.softmax(attn_weights, dim=3, dtype=torch.float32).to(dtype)
 
