@@ -144,8 +144,7 @@ def rmsnorm(x, weight, eps=1e-5):
     x = x.to(torch.float32)
     variance = x.pow(2).mean(-1, keepdim=True)
     x = x * torch.rsqrt(variance + eps)
-    x = weight * x
-    return x.to(dtype)
+    return weight * x.to(dtype)
 
 def rotate_half(x):
     """Rotates half the hidden dims of the input."""
